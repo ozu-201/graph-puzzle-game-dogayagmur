@@ -34,6 +34,8 @@ namespace list {
 
         void depthFirstSearch(bool* visited, int fromNode) override;
 
+        void shortestPathBetweenWords(const std::string &startWord, const std::string &endWord);
+
     protected:
 
         Edge* edgeList(int& edgeCount) override;
@@ -41,6 +43,7 @@ namespace list {
         bool areValidEdges(const std::string& word1, const std::string& word2) const;
         int findWordIndex(const std::string& word) const;
 
+        void addEdge(std::string from, std::string to);
     };
 
 }

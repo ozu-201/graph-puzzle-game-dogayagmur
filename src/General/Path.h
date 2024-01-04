@@ -9,13 +9,14 @@
 class Path {
 private:
     int distance;
-    int previous;
 public:
     Path(int distance, int previous);
     Path() = default;
     int getDistance() const;
     void setDistance(int _distance);
     void setPrevious(int _previous);
+
+    int previous;
 };
 
 

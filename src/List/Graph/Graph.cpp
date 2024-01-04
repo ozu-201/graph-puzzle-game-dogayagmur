@@ -2,6 +2,7 @@
 // Created by Olcay Taner YILDIZ on 8.05.2023.
 //
 
+#include <iostream>
 #include "Graph.h"
 #include "../../Array/DisjointSet.h"
 #include "../Queue.h"
@@ -16,12 +17,24 @@ namespace list {
         }
     }
 
+    // Add Edge between the words from their indexes
     void Graph::addEdge(int from, int to) {
         Edge* edge = new Edge(from, to, 1);
         edges[from].insert(edge);
     }
 
-      bool Graph::areValidEdges(const std::string& word1, const std::string& word2) const {
+    // Add edge between the words from the words itself
+    void Graph::addEdge(string from, string to) {
+        int index1 = findWordIndex(from);
+        int index2 = findWordIndex(to);
+        Edge* edge = new Edge(index1, index2, 1);
+        edges[index1].insert(edge);
+    }
+
+
+    // It checks if two words only have one letter of difference
+    bool Graph::areValidEdges(const std::string& word1, const std::string& word2) const {
+        // if they have different lengths returns a false
         if (word1.length() != word2.length()) {
             return false;
         }
@@ -36,35 +49,63 @@ namespace list {
         return difference;
     }
 
+    // It checks the list of words and test if they have valid edges, and if they do it creates a graph from it
     void Graph::buildGraphFromDictionary(const std::vector<std::string>& dictionary) {
         wordList.assign(dictionary.begin(), dictionary.end());
 
         for (size_t i = 0; i < wordList.size(); ++i){
             for(size_t j = i+1; j < wordList.size(); ++j){
                 if(areValidEdges(wordList[i], wordList[j])){
-                    addEdge(static_cast<int>(i), static_cast<int>(j));
-                    addEdge(static_cast<int>(j), static_cast<int>(i));
+                    addEdge((i), (j));
+                    addEdge((j), (i));
                 }
             }
         }
     }
 
+    // In a list of words returns the index of the desired word
     int Graph :: findWordIndex(const std:: string& word)const{
         for (size_t i = 0; i < wordList.size(); ++i) {
             if(wordList[i] == word){
-                return static_cast<int>(i);
+                return i;
             }
         }
         return -1;
     }
 
-    void Graph::addEdge(int from, int to, int weight) {
-        Edge* edge = new Edge(from, to, weight);
-        edges[from].insert(edge);
-    }
-
     Graph::~Graph() {
         delete[] edges;
+    }
+
+    // finds the shortest way between two words
+    void Graph::shortestPathBetweenWords(const std::string& startWord, const std::string& endWord) {
+
+        // find the indexes of the words in the graph
+        int startIndex = findWordIndex(startWord);
+        int endIndex = findWordIndex(endWord);
+
+        // if they are not present in the dictionary it returns an error message
+        if (startIndex == -1 || endIndex == -1) {
+            std::cerr << "Error: Words not found in the dictionary." << std::endl;
+            return;
+        }
+
+        // finds the shortest path using dijkstra
+        Path* shortestPaths = dijkstra(startIndex);
+
+        std::cout << "Shortest Path from " << startWord << " to " << endWord << ": ";
+
+        int current = endIndex;
+        while (current != startIndex) {
+            std::cout << wordList[current] << " -> ";
+            current = shortestPaths[current].previous;
+        }
+
+        // Print the starting word
+        std::cout << wordList[startIndex] << std::endl;
+
+        // Clean up
+        delete[] shortestPaths;
     }
 
     void Graph::connectedComponentsDisjointSet() {

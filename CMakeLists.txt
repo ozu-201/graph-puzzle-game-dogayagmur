@@ -124,4 +124,4 @@ add_executable(graph_puzzle_game_dogayagmur
         src/Tree/Tree.cpp
         src/Tree/Tree.h
         src/Tree/TreeNode.cpp
-        src/Tree/TreeNode.h)
+        src/Tree/TreeNode.h src/main.cpp)
