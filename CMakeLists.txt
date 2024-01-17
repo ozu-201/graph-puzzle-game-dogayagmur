@@ -92,7 +92,6 @@ add_executable(graph_puzzle_game_dogayagmur
         src/List/Polynomial/Term.h
         src/List/Polynomial/TermNode.cpp
         src/List/Polynomial/TermNode.h
-        src/List/Polynomial/TestPolynomial.cpp
         src/List/DoublyLinkedList.cpp
         src/List/DoublyLinkedList.h
         src/List/DoublyNode.cpp
@@ -124,4 +123,8 @@ add_executable(graph_puzzle_game_dogayagmur
         src/Tree/Tree.cpp
         src/Tree/Tree.h
         src/Tree/TreeNode.cpp
-        src/Tree/TreeNode.h src/main.cpp)
+        src/Tree/TreeNode.h
+        src/List/Graph/main.cpp
+        src/List/Graph/Graph.h
+        src/List/Graph/Graph.h
+        src/List/Graph/Graph.cpp)

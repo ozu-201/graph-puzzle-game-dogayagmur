@@ -28,9 +28,3 @@ string dartGame(int* board, int boardSize, int target){
     }
     return "";
 }
-
-
-int main(){
-    int board[] = {11, 21, 27, 33, 36};
-    cout << dartGame(board, 5, 100);
-}
